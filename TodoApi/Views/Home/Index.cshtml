@@ -1,0 +1,52 @@
+﻿<header>
+    <h1>Hello, world!</h1>
+    <h2>Welcome to my TODO app.</h2>
+    <h3>I'm too lazy to make a frontend for the API, so this is all that you're gonna get.</h3>
+    <p>Go use Postman or something™</p>
+</header>
+
+<hr>
+
+<body>
+<h2>Here's a list of routes and their actions!</h2>
+<ul>
+    <li>
+        /api/todo
+        <ul>
+            <li>GET (returns all TodoItems)</li>
+            <li>POST (adds a TodoItem)</li>
+        </ul>
+    </li>
+    <li>
+        /api/todo/{id} (e.g. /api/todo/1)
+        <ul>
+            <li>GET (return one TodoItem)</li>
+            <li>PUT (update one TodoItem)</li>
+            <li>DELETE (remove one TodoItem)</li>
+        </ul>
+    </li>
+</ul>
+</body>
+
+<hr>
+
+<footer>
+    <p>Made with ♥️ using C# and ASP.NET</p>
+    <p>P.S. Here's a picture of my dogs!</p>
+    <img src="@Url.Content("~/Images/dog.jpg")" alt="DOG!!!">
+</footer>
+
+<style>
+    * {
+        margin: 20px;
+    }
+    header, h2, footer {
+        text-align: center;
+    }
+    li {
+        margin-left: 40%;
+    }
+    ul ul li {
+        margin-left: 0;
+    }
+</style>
