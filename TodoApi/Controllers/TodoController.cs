@@ -38,13 +38,9 @@ public class TodoController : Controller
 
     // POST: api/todo
     [HttpPost]
-    public async Task<IActionResult> AddTodo([FromBody]TodoItem todo)
+    public async Task<IActionResult> AddTodo([FromBody]PostTodoDto todo)
     {
-        if (todo.Id != 0)
-        {
-            return BadRequest("ID must be set to 0 or none"); // Prevents user from setting own ID
-        }
-        var newTodo = await _todoService.AddTodoItem(todo);
+        var newTodo = await _todoService.AddTodoItem(todo.ToTodoItem());
         return Created("Successfully created new TodoItem", newTodo);
     }
 
@@ -65,16 +61,13 @@ public class TodoController : Controller
 
     // PUT: api/todo/1
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutTodo(int id, [FromBody]TodoItem todo) // [FromBody] tells it to look inside the
+    public async Task<IActionResult> PutTodo(int id, [FromBody]PutTodoDto todo) // [FromBody] tells it to look inside the
     {                                                                         // request body for the TodoItem
-        if (todo.Id != 0)
-        {
-            return BadRequest("ID must be set to 0 or none"); // Prevents user from changing the ID
-        }
-        
         try
         {
-            await _todoService.PutTodoItem(id, todo); // Throws error if TodoItem doesn't exist
+            // GetTodoItem() and PutTodoItem() both throw errors if the old Todo doesn't exist
+            var oldTodo = await _todoService.GetTodoItem(id);
+            await _todoService.PutTodoItem(id, todo.ToTodoItem(oldTodo));
             return NoContent();
         }
         catch (ArgumentException e) // Handle error

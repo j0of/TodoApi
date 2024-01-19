@@ -20,7 +20,7 @@ public class TodoService
     }
 
     // Returns one TodoItem from DB via its ID
-    public async Task<TodoItem?> GetTodoItem(int id)
+    public async Task<TodoItem> GetTodoItem(int id)
     {
         var todo = await _context.TodoItems.FindAsync(id); // Check for TodoItem with the id
         if (todo == null)
@@ -34,8 +34,6 @@ public class TodoService
     // Adds a new TodoItem to the DB and returns it
     public async Task<TodoItem> AddTodoItem(TodoItem todo)
     {
-        todo.Title ??= "No Title";
-
         var newTodo = _context.TodoItems.Add(todo);
         await _context.SaveChangesAsync(); // Save changes (added new TodoItem)
         return newTodo.Entity;
@@ -57,14 +55,13 @@ public class TodoService
     // Updates a TodoItem in the DB
     public async Task PutTodoItem(int id, TodoItem updatedTodo)
     {
+        // Replace old todo item with new todo item
         var todo = await _context.TodoItems.FindAsync(id); // Find the original TodoItem that we're trying to change
         if (todo == null)
         {
             throw new ArgumentException($"TodoItem with ID {id} not found"); // Original TodoItem doesn't exist; throw error
         }
-
-        updatedTodo.Title ??= "No Title"; // Prevents a TodoItem with a null title from being added to DB
-
+        
         // Update the old TodoItem's properties with the new ones
         todo.Title = updatedTodo.Title;
         todo.Completed = updatedTodo.Completed;
