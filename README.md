@@ -24,11 +24,11 @@ Here is a list of routes that you can request in Postman (or any other HTTP clie
   "completed": false
 }
 ```
-(Note: You may not specify an ID here)
+(Note: You may not specify an ID here; default values for title and completed are "No title" and `false`, respectively)
 - PUT /api/todo/1 : Update an existing TodoItem, based on the request body. (substitute 1 with any ID) Example request body:
 ```json
 {
   "completed": true
 }
 ```
-(Note: You may not specify an ID here; leaving the title blank will keep it the same as it was before)
+(Note: You may not specify an ID here; default values for each property are their old ones)
